@@ -31,12 +31,12 @@ function App(props) {
       <Router>
           <AuthProvider>
             <Routes>
-            <Route exact path='/' element={<PrivateRoute/>}>
-                <Route exact path='/' element={<Home/>}/>
-            </Route>
+              <Route exact path='/' element={<PrivateRoute/>}>
+                  <Route exact path='/' element={<Home/>}/>
+              </Route>
               <Route exact path="/login" element={<Login model={model}/>}/>
               <Route exact path="/signup" element={<SignUp model={model}/>}/>
-              <Route path="/forgot-password" exact element={<ForgetPassword model={model}/>}/>
+              <Route path="/forget-password" exact element={<ForgetPassword model={model}/>}/>
               {/* unmatched Route */}
               <Route component={NoMatch} />
             </Routes>

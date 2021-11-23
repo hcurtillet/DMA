@@ -3,6 +3,8 @@ import { Button, Card, InputGroup, Form } from "react-bootstrap";
 import { Envelope, Lock } from 'react-bootstrap-icons';
 
 export const StyledCard = styled(Card)`
+    background-color: #E5E5E5;
+    border: none;
     display: flex;
     padding: 20px;
     margin: 20px;
@@ -20,7 +22,7 @@ export const StyledForm = styled(Form)`
 
 export const StyledTitle = styled.h2`
     text-align: center; 
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 `;
 
 export const StyledLink = styled.div`

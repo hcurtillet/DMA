@@ -1,5 +1,5 @@
-import React, {useCallback, useState, useRef} from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useRef } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import {Form, Alert} from 'react-bootstrap';
 import { useAuth } from '../../context/AuthProvider';
 import { CenterContainer, Logo } from '../../components';
@@ -17,15 +17,22 @@ function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const [error, setError]=useState('');
+    const [loading, setLoading] = useState(false);
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
-    const handleLogin = useCallback(async event => {
-        event.preventDefault();
+    async function handleLogin(e){
+        e.preventDefault();
         try {
-
-        } catch (error) {
-            setError(error);
+            setError("");
+            setLoading(true);
+            await login(emailRef.current.value, passwordRef.current.value);
+            navigate("/");
+        } catch {
+            setError("Failed to log in");
         }
-    }, []);
+        setLoading(false);
+    };
 
 
     return (
@@ -57,12 +64,14 @@ function Login() {
                             required
                         />
                     </StyledInput>
-                    <StyledButton type="submit">
+                    <StyledButton disabled={loading} type="submit">
                         Login
                     </StyledButton>
                 </Form>
             </StyledCard>
-
+            <StyledLink>
+                <Link to="/forget-password">Forget Password?</Link>
+            </StyledLink>
             <StyledLink>
                 Need an account? <Link to="/signup">Sign Up</Link>
             </StyledLink>

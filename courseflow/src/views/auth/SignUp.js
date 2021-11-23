@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, {useCallback, useState, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import { useAuth } from '../../context/AuthProvider';
 import {CenterContainer} from '../../components';
 import {Alert} from 'react-bootstrap';
@@ -19,21 +19,23 @@ function SignUp() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const {signup} = useAuth()
     const [error, setError]=useState('');
+    const [loading, setLoading] = useState(false);
+    const {signup} = useAuth()
 
-    const handleSignUp = useCallback(async event => {
-        event.preventDefault();
+    async function handleSignUp(e){
+        e.preventDefault();
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
             return setError('Password does not match!')
         }
         try {
             await signup(emailRef.current.value, passwordRef.current.value)
 
-        } catch (error) {
-            setError(error);
+        } catch {
+            setError("Failed to sign up");
         }
-    }, []);
+        setLoading(false);
+    };
 
     return (
         <div>
@@ -75,7 +77,7 @@ function SignUp() {
                                 required
                             />
                         </StyledInput>
-                        <StyledButton type="submit">
+                        <StyledButton disabled={loading} type="submit">
                             Sign Up
                         </StyledButton >
                     </StyledForm>
