@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import App from './App';
 import "bootstrap/dist/css/bootstrap.min.css"
+import { UserModel } from "./model";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Initialize model
+const myModel = new UserModel();
+
+ReactDOM.render(<App model={myModel}/>, document.getElementById('root'));
 

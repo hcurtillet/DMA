@@ -1,5 +1,11 @@
-import { SignUp } from "./auth";
+// Auth
+import CenterContainer from './CenterContainer';
+import PrivateRoute from './PrivateRoute';
+import Logo from './Logo/Logo';
 
 export {
-    SignUp,
+    // auth
+    Logo,
+    PrivateRoute,
+    CenterContainer
 };
