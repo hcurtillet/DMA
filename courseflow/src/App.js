@@ -1,23 +1,47 @@
-import logo from './logo.svg';
+import React from "react"
+import {
+  Home,
+  SignUp,
+  Login,
+  ForgetPassword
+} from './views';
+import { AuthProvider } from './context/AuthProvider';
+import { 
+  PrivateRoute,
+  CenterContainer 
+} from "./components";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
-function App() {
-  return (
+function App(props) {
+
+  const {
+    model, // Model keeping application state
+  } = props;
+
+  // route
+  const NoMatch = ({ location }) => (
+    <CenterContainer>
+        <h3>No match for <code>{location.pathname}</code></h3>
+    </CenterContainer>
+  );
+  
+  return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+          <AuthProvider>
+            <Routes>
+              <Route exact path='/' element={<PrivateRoute/>}>
+                  <Route exact path='/' element={<Home/>}/>
+              </Route>
+              <Route exact path="/login" element={<Login model={model}/>}/>
+              <Route exact path="/signup" element={<SignUp model={model}/>}/>
+              <Route path="/forget-password" exact element={<ForgetPassword model={model}/>}/>
+              {/* unmatched Route */}
+              <Route component={NoMatch} />
+            </Routes>
+          </AuthProvider>
+      </Router>
     </div>
   );
 }
