@@ -1,8 +1,0 @@
-{
-    "name": "backend",
-    "version": "0.0.1",
-    "type": "module",
-    "dependencies": {
-        "mysql2": "^2.3.3"
-    }
-}
