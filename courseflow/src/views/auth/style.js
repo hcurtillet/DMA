@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Card, InputGroup, Form } from "react-bootstrap";
+import { Button, Card, InputGroup, Form, Collapse } from "react-bootstrap";
 import { Envelope, Lock } from 'react-bootstrap-icons';
 
 export const StyledCard = styled(Card)`
@@ -53,6 +53,7 @@ export const StyledButton = styled(Button)`
     color: black;
     border-radius: 30px;
     width: 150px;
+    margin-bottom: 35px;
     font-family: Georgia, "Times New Roman", Times, serif;
 `;
 
@@ -63,4 +64,25 @@ export const StyledInput = styled(InputGroup)`
     vertical-align: middle;
     text-align: center;
     font-family: Georgia, "Times New Roman", Times, serif;
+`;
+
+export const StyledIcon = styled.div`
+    display: inline-block;
+    background-color: whitesmoke;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-bottom: 20px;
+`;
+
+export const StyledCollapse = styled(Collapse)`
+    background: whitesmoke;
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 `;
