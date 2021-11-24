@@ -19,10 +19,10 @@ export const database = getFirestore(app);
 export const auth = getAuth(app);
 
 export async function getCourses() {
-  const citiesCol = collection(database, "Courses");
-  const citySnapshot = await getDocs(citiesCol);
-  const cityList = citySnapshot.docs.map((doc) => doc.data());
-  return cityList;
+  const coursesCol = collection(database, "Courses");
+  const coursesSnapshot = await getDocs(coursesCol);
+  const coursesList = coursesSnapshot.docs.map((doc) => doc.data());
+  return coursesList;
 }
 
 export function useCourses() {
