@@ -14,7 +14,7 @@ import {
 } from "./style";
 import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-
+import { Center } from "@chakra-ui/react";
 function Profile() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -69,7 +69,7 @@ function Profile() {
   }
   return (
     <div>
-      <CenterContainer>
+      <Center>
         <StyledTitle>Profile</StyledTitle>
 
         {error && <Alert variant="danger">{error}</Alert>}
@@ -141,7 +141,7 @@ function Profile() {
             </StyledButton>
           </StyledCard.Body>
         </StyledCard>
-      </CenterContainer>
+      </Center>
     </div>
   );
 }
