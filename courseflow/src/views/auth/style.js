@@ -64,3 +64,48 @@ export const StyledInput = styled(InputGroup)`
     text-align: center;
     font-family: Georgia, "Times New Roman", Times, serif;
 `;
+
+export const StyledQuestionTitle = styled.div`
+    horizontal-align: center;
+    margin: 0 auto;
+    padding: 30px;
+    font-size: 25px;
+    text-align:center;
+    width:100%;
+    background-color: #1A54A6;
+`;
+
+export const StyledQuestionText = styled.div`
+    font-size: 20px;
+    text-align:justify;
+`;
+
+export const StyledMessage = styled.div`
+    margin: 10px auto;
+    font-size: 20px;
+    text-aligh: left;
+    background-color: #FFFFFF;
+    width:95%;
+    padding:30px;
+
+`;
+
+export const StyledUserMessage = styled.div`
+    text-align:left;
+`;
+
+export const StyledTimeMessage = styled.div`
+    text-align:right;
+    font-size:16px;
+    bottom-margin:50px;
+`;
+
+export const StyledButtonAnswer = styled(Button)`
+    background: #F5F5F5;
+    display:block;
+    color: black;
+    border-radius: 30px;
+    font-size: 20px;
+    margin: 0 auto;
+    font-family: Georgia, "Times New Roman", Times, serif;
+`;
