@@ -2,6 +2,7 @@ import React from 'react'
 import {ListGroup} from 'react-bootstrap';
 import {useNavigate} from "react-router-dom";
 import { database } from "../firebase"
+import {StyledTimeMessage, StyledQuestionItemTitle, StyledTimestampSmall, StyledUsernameSmall} from "./auth/style";
 import { getFirestore, collection, doc, getDocs, getDoc, where, query, setDoc } from "firebase/firestore/lite";
 import useSWR from "swr";
 
@@ -30,21 +31,16 @@ export default function QuestionsList() {
     const {data: questions} = useQuestions();
 
     if(questions===undefined) return null;
-    console.log(questions)
+
     return (
-      <div>
-        <ListGroup>
-          {questions.map(question => 
-            <ListGroup.Item  key={""+question.title} action href={"/"+question.title}> 
-              <div className="d-flex w-100 justify-content-between">
-                <h5 className="mb-1">{question.title}</h5>
-              </div>
-              <div className="d-flex w-100 justify-content-between">
-                <p className="mb-1">{question.userName}</p>
-                <small>{toDate(question.date.seconds)}</small>
-              </div>
-            </ListGroup.Item>)}
-      </ListGroup>
-    </div>
-    )
+      <ListGroup>
+        {questions.map(question => 
+          <ListGroup.Item  key={""+question.title} action href={"/"+question.title}> 
+            <StyledQuestionItemTitle>{question.title}</StyledQuestionItemTitle>
+            <div className="d-flex justify-content-between">
+              <StyledUsernameSmall>{question.userName}</StyledUsernameSmall>
+              <StyledTimestampSmall>{toDate(question.date.seconds)}</StyledTimestampSmall>
+            </div>
+          </ListGroup.Item>)}
+    </ListGroup>);
 };

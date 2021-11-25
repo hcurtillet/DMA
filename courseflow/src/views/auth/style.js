@@ -109,3 +109,21 @@ export const StyledButtonAnswer = styled(Button)`
     margin: 0 auto;
     font-family: Georgia, "Times New Roman", Times, serif;
 `;
+
+export const StyledQuestionItemTitle = styled.h2`
+    text-align: left; 
+    margin-bottom: 5px;
+`;
+
+export const StyledTimestampSmall = styled.div`
+    text-align:right;
+    font-size:10px;
+    bottom-margin:5px;
+    opacity:0.8;
+`;
+
+export const StyledUsernameSmall = styled.div`
+    text-align:left;
+    font-size:14px;
+    bottom-margin:5px;
+`;
