@@ -84,7 +84,7 @@ export const StyledMessage = styled.div`
     margin: 10px auto;
     font-size: 20px;
     text-aligh: left;
-    background-color: #D1D1D1;
+    background-color: #FFFFFF;
     width:95%;
     padding:30px;
 
@@ -102,10 +102,10 @@ export const StyledTimeMessage = styled.div`
 
 export const StyledButtonAnswer = styled(Button)`
     background: #F5F5F5;
+    display:block;
     color: black;
     border-radius: 30px;
     font-size: 20px;
-    margin: 0;
+    margin: 0 auto;
     font-family: Georgia, "Times New Roman", Times, serif;
-    transform: translateX(25vh);
 `;
