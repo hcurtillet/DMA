@@ -35,28 +35,30 @@ function Home() {
     return (
       <div>
         <CenterContainer>
+          <StyledButton onClick={goToProfile}>Profile</StyledButton>
           <StyledCard>
             <StyledTitle>Homepage</StyledTitle>
           </StyledCard>
         </CenterContainer>
         <VStack>
           {courses.map((course) => (
-            <Button
+            <Box
+              as="button"
               padding="10px"
-              borderColor="red"
-              borderWidth="4px"
+              w={1 / 2}
+              borderColor="#f5f5f5"
+              boxShadow="md"
               borderRadius="md"
               shadow="md"
-              margin="10px"
+              margin="5px"
               backgroundColor="white"
+              _hover={{ fontWeight: "semibold" }}
               key={course.name}
             >
               {course.name}
-            </Button>
+            </Box>
           ))}
         </VStack>
-
-        <StyledButton onClick={goToProfile}>Profile</StyledButton>
       </div>
     );
   }
