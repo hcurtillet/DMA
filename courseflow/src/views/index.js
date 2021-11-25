@@ -1,4 +1,4 @@
-import { SignUp, Login, ForgetPassword } from "./auth";
+import { SignUp, Login, ForgetPassword, Profile } from "./auth";
 import Home from "./Home";
 import Forum from "./Forum";
 
@@ -8,4 +8,5 @@ export {
     Login,
     ForgetPassword,
     Forum,
+    Profile
 };

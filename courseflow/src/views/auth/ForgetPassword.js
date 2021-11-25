@@ -52,7 +52,7 @@ function ForgetPassword() {
                          </StyledButton>
                     </Form>
                     <StyledLink>
-                        <Link to="/login">Log in</Link>
+                        <Link to="/login">Login</Link>
                     </StyledLink>
             </StyledCard>
         </CenterContainer>
