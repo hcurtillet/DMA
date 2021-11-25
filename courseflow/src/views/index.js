@@ -1,6 +1,7 @@
 import { SignUp, Login, ForgetPassword } from "./auth";
 import Home from "./Home";
 import Forum from "./Forum";
+import AddQuestion from "./AddQuestion";
 
 export {
     Home,
@@ -8,4 +9,5 @@ export {
     Login,
     ForgetPassword,
     Forum,
+    AddQuestion
 };

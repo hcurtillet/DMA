@@ -65,6 +65,17 @@ export const StyledInput = styled(InputGroup)`
     font-family: Georgia, "Times New Roman", Times, serif;
 `;
 
+export const StyledInputQuestion = styled(InputGroup)`
+    width: 100%;
+    min-height: 100px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    vertical-align: middle;
+    multi-line: true;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", Times, serif;
+`;
+
 export const StyledQuestionTitle = styled.div`
     horizontal-align: center;
     margin: 0 auto;

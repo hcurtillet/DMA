@@ -44,8 +44,12 @@ function useQuestion() {
 async function getMessages() {
     const messagesCollection = collection(database, "Messages");
     const messagesQuery = query(messagesCollection, where("questionId", "==", idQuestion));
+    console.log(query);
     const messagesSnapshot = await getDocs(messagesQuery);
-    const messagesList= messagesSnapshot.docs.map((doc) => doc.data());
+    const messagesList= messagesSnapshot.docs.map((doc) => {
+        return doc.data();
+    
+    });
     messagesList.sort((a,b) =>{ //in order to sort the message list by date
         return a.date.seconds - b.date.seconds;
     })
@@ -84,7 +88,7 @@ function Forum(){
 
     if(question != undefined && messages!=undefined){
         // console.log(question);
-        // console.log(messages);
+        //console.log(messages);
         return(
             <QuestionContainer>
                 <StyledQuestionTitle>{question.title}</StyledQuestionTitle>
