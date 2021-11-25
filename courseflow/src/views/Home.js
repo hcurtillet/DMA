@@ -2,18 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCourses } from "../firebase";
 import {
-  StyledEmailIcon,
-  StyledPasswordIcon,
-  StyledButton,
-  StyledInput,
-  StyledCard,
-  StyledTitle,
-  StyledForm,
-  StyledIcon,
-  StyledCollapse,
-} from "./auth/style";
-import { CenterContainer } from "../components";
-import {
   Center,
   VStack,
   Box,
