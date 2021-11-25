@@ -3,7 +3,8 @@ import {
   Home,
   SignUp,
   Login,
-  ForgetPassword
+  ForgetPassword,
+  Forum
 } from './views';
 import { AuthProvider } from './context/AuthProvider';
 import { 
@@ -37,6 +38,7 @@ function App(props) {
               <Route exact path="/login" element={<Login model={model}/>}/>
               <Route exact path="/signup" element={<SignUp model={model}/>}/>
               <Route path="/forget-password" exact element={<ForgetPassword model={model}/>}/>
+              <Route exact path="/forum" element={<Forum/>}/>
               {/* unmatched Route */}
               <Route component={NoMatch} />
             </Routes>
