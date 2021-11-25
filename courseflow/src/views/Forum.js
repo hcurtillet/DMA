@@ -79,9 +79,6 @@ function Forum(){
             date:{seconds: Date.now()/1000, nanoseconds: 0},
             userName: currentUser.email
         }
-        
-        console.log(toDate(newAnswerObject.date.seconds));
-        console.log(newAnswerObject);
         updateAnswer(newAnswerObject);
     }
 
