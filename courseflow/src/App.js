@@ -4,15 +4,14 @@ import {
   SignUp,
   Login,
   ForgetPassword,
-  Forum,
-  Profile
+  Forum
 } from './views';
 import { AuthProvider } from './context/AuthProvider';
 import { 
   PrivateRoute,
   CenterContainer 
 } from "./components";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
 function App(props) {
@@ -22,13 +21,11 @@ function App(props) {
   } = props;
 
   // route
-  function NoMatch(){
-    return (
-      <CenterContainer>
-        <h3>No match for <code>{window.location.pathname}</code></h3>
-      </CenterContainer>
-    )
-  };
+  const NoMatch = ({ location }) => (
+    <CenterContainer>
+        <h3>No match for <code>{location.pathname}</code></h3>
+    </CenterContainer>
+  );
   
   return(
     <div className="App">
@@ -36,17 +33,14 @@ function App(props) {
           <AuthProvider>
             <Routes>
               <Route exact path='/' element={<PrivateRoute/>}>
-                  <Route exact path='/' element={<Home model={model}/>}/>
+                  <Route exact path='/' element={<Home/>}/>
               </Route>
-              <Route exact path="/login" element={<Login/>}/>
-              <Route exact path="/signup" element={<SignUp/>}/>
-              <Route exact path="/forget-password" element={<ForgetPassword/>}/>
-              <Route exact path='/profile' element={<PrivateRoute/>}>
-              <Route exact path='/profile' element={<Profile/>}/>
+              <Route exact path="/login" element={<Login model={model}/>}/>
+              <Route exact path="/signup" element={<SignUp model={model}/>}/>
+              <Route path="/forget-password" exact element={<ForgetPassword model={model}/>}/>
               <Route exact path="/forum" element={<Forum/>}/>
-              </Route>
               {/* unmatched Route */}
-              <Route path="*" element={<NoMatch/>} />
+              <Route component={NoMatch} />
             </Routes>
           </AuthProvider>
       </Router>

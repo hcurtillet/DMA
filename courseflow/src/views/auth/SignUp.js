@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, {useState, useRef} from 'react';
 import { useAuth } from '../../context/AuthProvider';
-import { CenterContainer } from '../../components';
-import { Alert } from 'react-bootstrap';
+import {CenterContainer} from '../../components';
+import {Alert} from 'react-bootstrap';
 import {
     StyledEmailIcon,
     StyledPasswordIcon,
@@ -22,7 +22,6 @@ function SignUp() {
     const [error, setError]=useState('');
     const [loading, setLoading] = useState(false);
     const {signup} = useAuth()
-    const navigate = useNavigate();
 
     async function handleSignUp(e){
         e.preventDefault();
@@ -31,7 +30,7 @@ function SignUp() {
         }
         try {
             await signup(emailRef.current.value, passwordRef.current.value)
-            navigate("/login");
+
         } catch {
             setError("Failed to sign up");
         }
@@ -79,7 +78,7 @@ function SignUp() {
                             />
                         </StyledInput>
                         <StyledButton disabled={loading} type="submit">
-                            {loading ? "Creating account…" : "Sign Up"}
+                            Sign Up
                         </StyledButton >
                     </StyledForm>
                 </StyledCard>

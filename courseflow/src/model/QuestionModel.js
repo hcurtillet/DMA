@@ -1,4 +1,5 @@
-import database from "../firebase";
+import { database } from "../firebase";
+import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 
 class QuestionModel{
     constructor(title = null, userName=null, text=null, answers=null){
@@ -15,15 +16,6 @@ class QuestionModel{
         this.answers = null;
     }
 
-    getQuestion(questionid=null){
-        const myQuestion = database.collection('Questions').docs('1');
-        myQuestion.onSnapShot(
-            question =>{
-                const data = question.data();
-                console.log(data);
-            }
-        )
-    }
 }
 
 export default QuestionModel;
