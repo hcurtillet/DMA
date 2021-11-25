@@ -1,25 +1,19 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCourses } from "../firebase";
 import {
   StyledEmailIcon,
   StyledPasswordIcon,
   StyledButton,
   StyledInput,
-  StyledLink,
   StyledCard,
   StyledTitle,
-  StyledCourseButton,
   StyledForm,
-  StyledCourse,
+  StyledIcon,
+  StyledCollapse,
 } from "./auth/style";
-import { useState } from "react";
 import { CenterContainer } from "../components";
-import { useCourses } from "../firebase";
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Center,
   VStack,
   Box,
@@ -33,13 +27,30 @@ import {
   useDisclosure,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import "@fontsource/open-sans/700.css";
+
+const theme = extendTheme({
+  textStyles: {
+    h1: {
+      // you can also use responsive styles
+      fontSize: ["32px", "48px"],
+      lineHeight: "110%",
+      letterSpacing: "-2%",
+    },
+    h2: {
+      fontSize: ["24px", "32px"],
+      lineHeight: "120%",
+      letterSpacing: "-1%",
+    },
+  },
+});
+
 function Home() {
   const navigate = useNavigate();
   function goToProfile() {
@@ -47,11 +58,16 @@ function Home() {
   }
 
   function goToHelp() {
-    //navigate("/profile");
+    //navigate("/help");
   }
 
   function goToMessage() {
-    //navigate("/profile");
+    //navigate("/message");
+  }
+
+  function goToCourse(course) {
+    console.log(course);
+    //navigate("/course");
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,29 +82,32 @@ function Home() {
 
   return (
     <div>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <IconButton
           ref={btnRef}
           colorScheme="blue"
           onClick={onOpen}
           icon={<HamburgerIcon />}
         ></IconButton>
-        <Center>
-          <Heading>Homepage</Heading>
-        </Center>
 
+        <Center>
+          <Box textStyle="h1">Homepage</Box>
+        </Center>
         <VStack>
+          <Box textStyle="h2" size="md">
+            Courses
+          </Box>
           {courses.map((course) => (
             <Box
-              as="button"
               padding="10px"
               w={3 / 4}
               borderColor="#f5f5f5"
-              boxShadow="md"
+              boxShadow="dark-lg"
               borderRadius="md"
-              shadow="md"
+              //shadow="xl"
               backgroundColor="white"
               key={course.name}
+              onClick={() => goToCourse(course)}
             >
               {course.name}
             </Box>

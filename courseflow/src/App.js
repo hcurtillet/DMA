@@ -4,7 +4,6 @@ import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute, CenterContainer } from "./components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { ChakraProvider } from "@chakra-ui/react";
 
 function App(props) {
   const {

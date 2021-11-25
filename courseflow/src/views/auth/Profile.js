@@ -69,7 +69,7 @@ function Profile() {
   }
   return (
     <div>
-      <Center>
+      <CenterContainer>
         <StyledTitle>Profile</StyledTitle>
 
         {error && <Alert variant="danger">{error}</Alert>}
@@ -141,7 +141,7 @@ function Profile() {
             </StyledButton>
           </StyledCard.Body>
         </StyledCard>
-      </Center>
+      </CenterContainer>
     </div>
   );
 }
