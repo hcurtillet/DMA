@@ -69,7 +69,7 @@ function Home() {
 
   function goToCourse(course) {
     console.log(course);
-    //navigate("/course");
+    navigate("/courses/"+course.id.trim());
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -1,9 +1,9 @@
 import React from 'react'
 import {ListGroup} from 'react-bootstrap';
-import {useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { database } from "../firebase"
-import {StyledTimeMessage, StyledQuestionItemTitle, StyledTimestampSmall, StyledUsernameSmall} from "./auth/style";
-import { getFirestore, collection, doc, getDocs, getDoc, where, query, setDoc } from "firebase/firestore/lite";
+import {StyledQuestionItemTitle, StyledTimestampSmall, StyledUsernameSmall} from "./auth/style";
+import { collection, getDocs, where, query } from "firebase/firestore/lite";
 import useSWR from "swr";
 
 export default function QuestionsList() {
@@ -33,7 +33,9 @@ export default function QuestionsList() {
     console.log(courseID);
     const {data: questions} = useQuestions();
     
-    if(questions===undefined) return null;
+    if(questions=== undefined || questions === null || questions.length === 0) {
+      return ( <h3> No question has been asked yet !</h3>);
+    }
 
     return (
       <ListGroup>
