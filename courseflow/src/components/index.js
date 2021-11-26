@@ -9,5 +9,5 @@ export {
     Logo,
     PrivateRoute,
     CenterContainer,
-    QuestionContainer,
+    QuestionContainer
 };

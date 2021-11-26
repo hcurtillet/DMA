@@ -1,34 +1,27 @@
-import React from "react"
-import {
-  Home,
-  SignUp,
-  Login,
-  ForgetPassword,
-  QuestionsList,
-  Forum
-} from './views';
-import { AuthProvider } from './context/AuthProvider';
-import { 
-  PrivateRoute,
-  CenterContainer 
-} from "./components";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css';
+import React from "react";
+import { Home, SignUp, Login, ForgetPassword, QuestionsList, Profile } from "./views";
+import { AuthProvider } from "./context/AuthProvider";
+import { PrivateRoute, CenterContainer } from "./components";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 function App(props) {
-
   const {
     model, // Model keeping application state
   } = props;
 
   // route
-  const NoMatch = ({ location }) => (
-    <CenterContainer>
-        <h3>No match for <code>{location.pathname}</code></h3>
-    </CenterContainer>
-  );
-  
-  return(
+  function NoMatch() {
+    return (
+      <CenterContainer>
+        <h3>
+          No match for <code>{window.location.pathname}</code>
+        </h3>
+      </CenterContainer>
+    );
+  }
+
+  return (
     <div className="App">
       <Router>
         <AuthProvider>
