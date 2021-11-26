@@ -36,6 +36,8 @@ export default function QuestionsList() {
     const navigate = useNavigate();
     const courseID = useLocation().pathname.replace("/courses/","");
     const {data: questions} = useQuestions();
+    console.log(questions);
+    console.log(courseID);
     
     if(questions=== undefined || questions === null || questions.length === 0) {
       return ( <h3> No question has been asked yet !</h3>);
@@ -44,7 +46,7 @@ export default function QuestionsList() {
     return (
       <ListGroup>
         {questions.map(question => 
-          <ListGroup.Item  key={""+question.title} action onClick={() => goToQuestion(question)}> 
+          <ListGroup.Item  key={question.id} action onClick={() => goToQuestion(question)}> 
             <StyledQuestionItemTitle>{question.title}</StyledQuestionItemTitle>
             <div className="d-flex justify-content-between">
               <StyledUsernameSmall>{question.userName}</StyledUsernameSmall>

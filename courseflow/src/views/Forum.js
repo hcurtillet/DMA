@@ -28,17 +28,12 @@ import useSWR from "swr";
 import { VStack, Box, Button } from "@chakra-ui/react";
 
 
-function toDate(seconds){
-    const dateObject = new Date(seconds*1000);
-    return dateObject.toLocaleString();
-}
-
-function updateAnswer(newAnswerObject){
-    const messagesCollection = collection(database, "Messages");
-    setDoc(doc(messagesCollection), newAnswerObject);
-}
-
 function Forum(){
+    function toDate(seconds){
+        const dateObject = new Date(seconds*1000);
+        return dateObject.toLocaleString();
+    }
+
     async function getQuestions() {
         const questionsCollection = doc(database, "Questions", idQuestion);
         const questionsSnapshot = await getDoc(questionsCollection);
@@ -53,7 +48,6 @@ function Forum(){
     async function getMessages() {
         const messagesCollection = collection(database, "Messages");
         const messagesQuery = query(messagesCollection, where("questionId", "==", idQuestion));
-        console.log(query);
         const messagesSnapshot = await getDocs(messagesQuery);
         const messagesList= messagesSnapshot.docs.map((doc) => {
             return doc.data();
@@ -72,7 +66,7 @@ function Forum(){
 
     const idQuestion = useLocation().pathname.replace("/question/","");
     const { currentUser, logout, updatePassword, updateEmail } = useAuth();
-    const {data: question} = useQuestion();
+    const {data: questions} = useQuestion();
     const {data: messages} = useMessages();
     const [newAnswer, setNewAnswer] = useState('');
 
@@ -86,9 +80,20 @@ function Forum(){
         updateAnswer(newAnswerObject);
     }
 
-    if(question != undefined && messages!=undefined){
-        //console.log(question);
-        //console.log(messages);
+    function updateAnswer(newAnswerObject){
+        const messagesCollection = collection(database, "Messages");
+        setDoc(doc(messagesCollection), newAnswerObject);
+    }
+
+    if(questions=== undefined || questions === null || questions.length === 0) {
+      return ( <QuestionContainer>
+                    <h1> This question is unavailable</h1>
+            </QuestionContainer>);
+    }
+
+    const question = questions[0];
+
+    if(question !== undefined && messages !== undefined){
         return(
             <QuestionContainer>
                 <StyledQuestionTitle>{question.title}</StyledQuestionTitle>
