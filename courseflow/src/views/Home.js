@@ -68,7 +68,6 @@ function Home() {
   }
 
   function goToCourse(course) {
-    console.log(course);
     navigate("/courses/"+course.id.trim());
   }
 

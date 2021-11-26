@@ -1,6 +1,6 @@
 import React from 'react'
 import {ListGroup} from 'react-bootstrap';
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { database } from "../firebase"
 import {StyledQuestionItemTitle, StyledTimestampSmall, StyledUsernameSmall} from "./auth/style";
 import { collection, getDocs, where, query } from "firebase/firestore/lite";
@@ -28,9 +28,13 @@ export default function QuestionsList() {
       let date = new Date(timestamp*1000);
       return date.toLocaleString();
     }
+    
+    function goToQuestion(question) {
+      navigate("/question/"+question.id.trim());
+    }
 
+    const navigate = useNavigate();
     const courseID = useLocation().pathname.replace("/courses/","");
-    console.log(courseID);
     const {data: questions} = useQuestions();
     
     if(questions=== undefined || questions === null || questions.length === 0) {
@@ -40,7 +44,7 @@ export default function QuestionsList() {
     return (
       <ListGroup>
         {questions.map(question => 
-          <ListGroup.Item  key={""+question.title} action href={"/"+question.title}> 
+          <ListGroup.Item  key={""+question.title} action onClick={() => goToQuestion(question)}> 
             <StyledQuestionItemTitle>{question.title}</StyledQuestionItemTitle>
             <div className="d-flex justify-content-between">
               <StyledUsernameSmall>{question.userName}</StyledUsernameSmall>
