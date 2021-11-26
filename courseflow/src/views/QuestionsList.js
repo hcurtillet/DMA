@@ -1,6 +1,6 @@
 import React from 'react'
 import {ListGroup} from 'react-bootstrap';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation } from "react-router-dom";
 import { database } from "../firebase"
 import {StyledTimeMessage, StyledQuestionItemTitle, StyledTimestampSmall, StyledUsernameSmall} from "./auth/style";
 import { getFirestore, collection, doc, getDocs, getDoc, where, query, setDoc } from "firebase/firestore/lite";
@@ -8,7 +8,8 @@ import useSWR from "swr";
 
 export default function QuestionsList() {
     async function getQuestions() {
-        const courseID = "ID1202";
+        
+        
         let questionsCollection = collection(database, "Questions");
         let questionsQuery = query(questionsCollection, where("courseId", "==", courseID));
         const snapshot = await getDocs(questionsQuery);
@@ -28,8 +29,10 @@ export default function QuestionsList() {
       return date.toLocaleString();
     }
 
+    const courseID = useLocation().pathname.replace("/courses/","");
+    console.log(courseID);
     const {data: questions} = useQuestions();
-
+    
     if(questions===undefined) return null;
 
     return (

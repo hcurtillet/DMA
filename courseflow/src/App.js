@@ -31,20 +31,22 @@ function App(props) {
   return(
     <div className="App">
       <Router>
-          <AuthProvider>
-            <Routes>
-              <Route exact path='/' element={<PrivateRoute/>}>
-                  <Route exact path='/' element={<Home/>}/>
-              </Route>
-              <Route exact path="/login" element={<Login model={model}/>}/>
-              <Route exact path="/signup" element={<SignUp model={model}/>}/>
-              <Route path="/forget-password" exact element={<ForgetPassword model={model}/>}/>
-              <Route exact path="/questions-list" element={<QuestionsList/>}/>
-              <Route exact path="/forum" element={<Forum/>}/>
-              {/* unmatched Route */}
-              <Route component={NoMatch} />
-            </Routes>
-          </AuthProvider>
+        <AuthProvider>
+          <Routes>
+            <Route exact path="/" element={<PrivateRoute />}>
+              <Route exact path="/" element={<Home model={model} />} />
+            </Route>
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/signup" element={<SignUp />} />
+            <Route exact path="/forget-password" element={<ForgetPassword />} />
+            <Route exact path="/courses/*" element={<QuestionsList />}/>
+            <Route exact path="/profile" element={<PrivateRoute />}>
+              <Route exact path="/profile" element={<Profile />} />
+            </Route>
+            {/* unmatched Route */}
+            <Route path="*" element={<NoMatch />} />
+          </Routes>{" "}
+        </AuthProvider>
       </Router>
     </div>
   );
