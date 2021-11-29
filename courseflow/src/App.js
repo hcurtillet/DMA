@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, SignUp, Login, ForgetPassword, Profile } from "./views";
+import { Home, SignUp, Login, ForgetPassword, QuestionsList, Profile } from "./views";
 import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute, CenterContainer } from "./components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -32,6 +32,7 @@ function App(props) {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<SignUp />} />
             <Route exact path="/forget-password" element={<ForgetPassword />} />
+            <Route exact path="/questions-list" element={<QuestionsList/>}/>
             <Route exact path="/profile" element={<PrivateRoute />}>
               <Route exact path="/profile" element={<Profile />} />
             </Route>

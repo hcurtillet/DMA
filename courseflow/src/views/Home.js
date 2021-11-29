@@ -36,6 +36,20 @@ const theme = extendTheme({
       letterSpacing: "-1%",
     },
   },
+  colors: {
+    kth: {
+      50: "#186DE4",
+      100: "#186DE4",
+      200: "#186DE4",
+      300: "#186DE4",
+      400: "#186DE4",
+      500: "#1A54A6",
+      600: "#186DE4",
+      700: "#186DE4",
+      800: "#186DE4",
+      900: "#186DE4",
+    },
+  },
 });
 
 function Home() {
@@ -72,7 +86,7 @@ function Home() {
       <ChakraProvider theme={theme}>
         <IconButton
           ref={btnRef}
-          colorScheme="blue"
+          colorScheme="kth"
           onClick={onOpen}
           icon={<HamburgerIcon />}
         ></IconButton>
