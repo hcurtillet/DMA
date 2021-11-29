@@ -11,10 +11,11 @@ import {
   StyledForm,
   StyledIcon,
   StyledCollapse,
+  StyledLink
 } from "./style";
 import { useAuth } from "../../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
-import { Center } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
+
 function Profile() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -24,10 +25,6 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const { currentUser, logout, updatePassword, updateEmail } = useAuth();
   const navigate = useNavigate();
-
-  function goToHomePage() {
-    navigate(-1);
-  }
 
   async function handlelogout() {
     setError(""); // clean current error context
@@ -131,7 +128,7 @@ function Profile() {
                 </StyledForm>
               </StyledCollapse>
             </StyledForm.Group>
-            <StyledButton onClick={goToHomePage}>Back</StyledButton>
+            
             <StyledButton
               disabled={loading}
               variant="danger"
@@ -139,6 +136,10 @@ function Profile() {
             >
               Logout
             </StyledButton>
+
+            <StyledLink>
+              <Link to="/">Back</Link>
+            </StyledLink>
           </StyledCard.Body>
         </StyledCard>
       </CenterContainer>

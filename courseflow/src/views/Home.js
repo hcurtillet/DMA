@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCourses } from "../firebase";
 import {
   Center,
@@ -7,7 +7,6 @@ import {
   Box,
   Button,
   IconButton,
-  Heading,
 } from "@chakra-ui/react";
 import { HamburgerIcon, ChatIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
 import { CgProfile } from "react-icons/cg";
