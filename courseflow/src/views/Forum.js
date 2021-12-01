@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   StyledEmailIcon,
   StyledPasswordIcon,
@@ -28,47 +28,45 @@ import useSWR from "swr";
 import { VStack, Box, Button } from "@chakra-ui/react";
 
 
-export var idQuestion = "This is my first question";
-
-async function getQuestions() {
-    const questionsCollection = doc(database, "Questions", idQuestion);
-    const questionsSnapshot = await getDoc(questionsCollection);
-    //const questionsList = questionsSnapshot.docs.map((doc) => doc.data());
-    return questionsSnapshot.data();
-}
-  
-function useQuestion() {
-    return useSWR("Questions", getQuestions);
-}
-
-async function getMessages() {
-    const messagesCollection = collection(database, "Messages");
-    const messagesQuery = query(messagesCollection, where("questionId", "==", idQuestion));
-    const messagesSnapshot = await getDocs(messagesQuery);
-    const messagesList= messagesSnapshot.docs.map((doc) => doc.data());
-    messagesList.sort((a,b) =>{ //in order to sort the message list by date
-        return a.date.seconds - b.date.seconds;
-    })
-    return messagesList;
-}
-  
-function useMessages() {
-    return useSWR("Messages", getMessages);
-}
-
-function toDate(seconds){
-    const dateObject = new Date(seconds*1000);
-    return dateObject.toLocaleString();
-}
-
-function updateAnswer(newAnswerObject){
-    const messagesCollection = collection(database, "Messages");
-    setDoc(doc(messagesCollection), newAnswerObject);
-}
-
 function Forum(){
+    function toDate(seconds){
+        const dateObject = new Date(seconds*1000);
+        return dateObject.toLocaleString();
+    }
+
+    async function getQuestions() {
+        const questionsCollection = doc(database, "Questions", idQuestion);
+        const questionsSnapshot = await getDoc(questionsCollection);
+        //const questionsList = questionsSnapshot.docs.map((doc) => doc.data());
+        return questionsSnapshot.data();
+    }
+      
+    function useQuestion() {
+        return useSWR("Questions", getQuestions);
+    }
+
+    async function getMessages() {
+        const messagesCollection = collection(database, "Messages");
+        const messagesQuery = query(messagesCollection, where("questionId", "==", idQuestion));
+        const messagesSnapshot = await getDocs(messagesQuery);
+        const messagesList= messagesSnapshot.docs.map((doc) => {
+            return doc.data();
+        
+        });
+        messagesList.sort((a,b) =>{ //in order to sort the message list by date
+            return a.date.seconds - b.date.seconds;
+        })
+        return messagesList;
+    }
+      
+    function useMessages() {
+        return useSWR("Messages", getMessages);
+    }
+
+
+    const idQuestion = useLocation().pathname.replace("/question/","");
     const { currentUser, logout, updatePassword, updateEmail } = useAuth();
-    const {data: question} = useQuestion();
+    const {data: questions} = useQuestion();
     const {data: messages} = useMessages();
     const [newAnswer, setNewAnswer] = useState('');
 
@@ -82,9 +80,20 @@ function Forum(){
         updateAnswer(newAnswerObject);
     }
 
-    if(question != undefined && messages!=undefined){
-        // console.log(question);
-        // console.log(messages);
+    function updateAnswer(newAnswerObject){
+        const messagesCollection = collection(database, "Messages");
+        setDoc(doc(messagesCollection), newAnswerObject);
+    }
+
+    if(questions=== undefined || questions === null || questions.length === 0) {
+      return ( <QuestionContainer>
+                    <h1> This question is unavailable</h1>
+            </QuestionContainer>);
+    }
+
+    const question = questions[0];
+
+    if(question !== undefined && messages !== undefined){
         return(
             <QuestionContainer>
                 <StyledQuestionTitle>{question.title}</StyledQuestionTitle>
