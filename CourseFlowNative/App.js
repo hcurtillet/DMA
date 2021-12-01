@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { 
   Login, 
   SignUp,
   ForgetPassword,
+  Profile,
   Home
 } from './src/screens';
 import { NavigationContainer } from '@react-navigation/native';
@@ -35,9 +35,10 @@ export default function App() {
             >
               
               <Stack.Screen name="Home" component={Home}/>
+              <Stack.Screen name="Login" component={Login}/>
               <Stack.Screen name="SignUp" component={SignUp}/>
               <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
-              <Stack.Screen name="Login" component={Login}/>
+              <Stack.Screen name="Profile" component={Profile}/>
                 
             </Stack.Navigator>
             </AuthProvider> 
