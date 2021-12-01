@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 import { Button, Card, InputGroup, Form, Collapse, Alert } from "react-bootstrap";
 import { Envelope, Lock } from "react-bootstrap-icons";
 
-
-
 export const styles = StyleSheet.create({
   title:{
     fontSize: 20,
