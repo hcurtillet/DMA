@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { 
   Login, 
   SignUp,
@@ -8,9 +8,10 @@ import {
 } from './src/screens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthProvider } from './src/contexts/AuthProvider';
+import { AuthProvider, useAuth } from './src/contexts/AuthProvider';
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from "styled-components";
+import {auth} from './firebase'
 
 const Stack = createStackNavigator();
 
@@ -22,24 +23,23 @@ const NavContainer = styled(NavigationContainer)`
 `;
 
 export default function App() {
+  
   return (
-    
       <AuthProvider>
           <NavContainer>
           <AuthProvider>
             <Stack.Navigator
-              initialRouteName="Login"
+              initialRouteName="Home"
               // screenOptions={{
               //   headerShown: false,
               // }}
             >
-              
-              <Stack.Screen name="Home" component={Home}/>
-              <Stack.Screen name="Login" component={Login}/>
-              <Stack.Screen name="SignUp" component={SignUp}/>
-              <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
-              <Stack.Screen name="Profile" component={Profile}/>
-                
+                <Stack.Screen name="Login" component={Login}/>
+                <Stack.Screen name="SignUp" component={SignUp}/>
+                <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
+                <Stack.Screen name="Home" component={Home}/>
+                <Stack.Screen name="Profile" component={Profile}/>
+
             </Stack.Navigator>
             </AuthProvider> 
           </NavContainer>
