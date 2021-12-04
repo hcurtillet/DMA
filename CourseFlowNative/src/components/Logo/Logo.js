@@ -1,18 +1,23 @@
 import React from "react";
 import logo from "./Logo.png";
-import styled from "styled-components";
+import styled from "styled-components/native";
+import { View, Image, StyleSheet } from 'react-native';
 
-const StyledImg = styled.img`
-  width: 80px;
-  height: 80px;
-  margin-bottom: 30px;
-  text-align: center;
-`;
+const styles = StyleSheet.create({
+  logo:{
+    width: 80,
+    height: 80,
+    marginBottom: 30,
+    alignContent: 'center'
+  }
+
+
+})
 
 export default function Logo() {
   return (
-    <div>
-      <StyledImg src={logo} alt="logo" />
-    </div>
+    <View>
+      <Image style={styles.logo} source={logo} alt="logo" />
+    </View>
   );
 }

@@ -1,30 +1,19 @@
 import React from 'react'
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View, Text, Button } from 'react-native';
 import { useAuth } from '../contexts/AuthProvider';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Home({navigation}) {
+export default function Home() {
     const {currentUser} = useAuth();
-
+    const navigation = useNavigation(); 
+    
     return (
         <React.Fragment>
-            {currentUser==null ?
-                <React.Fragment>
-                    <View>
-                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text>Login</Text>
-                        </TouchableOpacity>
-                    </View>
-                </React.Fragment>
-            :
-            <React.Fragment>
-                <h1>Home</h1>
-                <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                    <Text>Profile</Text>
-                    </TouchableOpacity>
-                </View>
-            </React.Fragment>
-            }
+            <View>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                <Text>Profile</Text>
+                </TouchableOpacity>
+            </View>
         </React.Fragment>
     )
 }
