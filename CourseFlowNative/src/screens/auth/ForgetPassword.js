@@ -31,39 +31,40 @@ export default function ForgetPassword() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-                <Text style={styles.title}>Reset Password</Text>
-                <Logo/>
-                <View style={styles.row}>
-                    {error ? <Text style={styles.alert}>{error}</Text>:null}
-                    {message ? <Text style={styles.message}>{message}</Text>:null}
-                </View>
-                <View style={styles.form}>
-                    <TextInput
-                        style={styles.textInput} 
-                        id="email"
-                        type="email" 
-                        onChangeText={text => setEmail(text)}
-                        required 
-                    />
-
-                    <Button 
-                        style={styles.button}
-                        title="Reset Password"
-                        mode="outlined"
-                        disabled={loading}
-                        onPress={e =>handleReset(e)}
-                    > Reset Password
-                    </Button>
-
-                </View>
-                    <View style={styles.row}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                            <Text style={styles.link}>Login</Text>
-                        </TouchableOpacity>
-                    </View>
-                
+            <Text style={styles.title}>Reset Password</Text>
+            <Logo/>
+            <View style={styles.row}>
+                {error ? <Text style={styles.alert}>{error}</Text>:null}
+                {message ? <Text style={styles.message}>{message}</Text>:null}
             </View>
+
+            <View style={styles.form}>
+                <TextInput
+                    style={styles.textInput} 
+                    id="email"
+                    type="email" 
+                    placeholder="Email"
+                    onChangeText={text => setEmail(text)}
+                    required 
+                />
+
+                <Button 
+                    style={styles.button}
+                    title="Reset Password"
+                    mode="outlined"
+                    disabled={loading}
+                    onPress={e =>handleReset(e)}
+                > Reset Password
+                </Button>
+
+                <View style={styles.row}>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.link}>Login</Text>
+                </TouchableOpacity>
+            </View>
+            </View>
+
+
         </SafeAreaView>
     )
 }

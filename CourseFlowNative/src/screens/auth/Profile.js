@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import { SafeAreaView, TouchableOpacity, View, Text, TextInput } from 'react-native';
-import { Button } from 'react-native-paper';
+import { SafeAreaView, TouchableOpacity, View, Text, TextInput, Pressable } from 'react-native';
 import {
     styles
   } from "./style";
@@ -28,20 +27,20 @@ function Profile() {
         <SafeAreaView style={styles.container}>
                 <Text style={styles.title}>Profile</Text>
                 {error ? <Text style={styles.alert}>{error}</Text> : null}
-                <View style={styles.formView}>
-                        <Text style={styles.icon}>
-                            {currentUser.email.charAt(0).toUpperCase()}
-                        </Text>
-                        <Text>{currentUser.email}</Text>
+                <View style={styles.profile}>
+                    <Text style={styles.icon}>
+                        {currentUser.email.charAt(0).toUpperCase()}
+                    </Text>
+                    <Text>{currentUser.email}</Text>
 
                     <View style={styles.row}>
-                        <Button
+                        <Pressable
+                            style={styles.logOutButton}
                             disabled={loading}
-                            mode="outlined"
                             onClick={handleLogout}
                         >
-                        Logout
-                        </Button>
+                            <Text style={styles.logOutText}>Log out</Text>
+                        </Pressable>
                     </View>
 
                     <View style={styles.row}>

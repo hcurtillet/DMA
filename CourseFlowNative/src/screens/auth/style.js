@@ -14,7 +14,8 @@ export const styles = StyleSheet.create({
     justifyContent:'center',
   },
 
-  formView:{
+  profile:{
+    alignContent:'center',
     alignItems:'center',
     justifyContent:'center',
   },
@@ -28,6 +29,7 @@ export const styles = StyleSheet.create({
   row:{
     width: 350,
     textAlign: 'center',
+    alignItems:'center',
     marginTop: 15,
   },
 
@@ -55,6 +57,20 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     width: 150,
     height: 40,
+  },
+
+  logOutButton:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f44336', /* Red */
+    borderRadius: 30,
+    width: 150,
+    height: 40,
+  },
+
+  logOutText:{
+    color:'white',
+    fontWeight:'bold'
   },
 
   textInput: {
