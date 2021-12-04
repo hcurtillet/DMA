@@ -1,31 +1,24 @@
-import React, {useState, useRef} from 'react'
-import { TouchableOpacity, View, Text } from 'react-native';
-import { Logo, CenterContainer } from '../../components';
-import {
-    StyledCard,
-    StyledForm,
-    StyledButton,
-    StyledEmailIcon,
-    StyledPasswordIcon,
-    StyledInput,
-    StyledAlert,
-    styles
-} from './style';
-import {auth} from '../../../firebase';
+import React, { useState } from 'react'
+import { SafeAreaView, TouchableOpacity, View, Text, TextInput,Button } from 'react-native';
+import { Logo } from '../../components';
+import { styles } from './style';
+import { auth } from '../../../firebase';
+import { useNavigation } from '@react-navigation/native';
 
-function Login({navigation}) {
-    const emailRef = useRef();
-    const passwordRef = useRef();
+function Login() {
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigation = useNavigation(); 
 
     async function handleLogin(e){
         e.preventDefault();
         try {
             setError("");
             setLoading(true);
-            await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
-            navigation.replace('Home');
+            await auth.signInWithEmailAndPassword(email, password);
+            navigation.navigate('Home');
         } catch {
             setError('Failed to log in');
         }
@@ -33,54 +26,54 @@ function Login({navigation}) {
     }
 
     return (
-        <CenterContainer>
-            <StyledCard>
+        <SafeAreaView style={styles.container}>
                 <Text style={styles.title}>Login</Text>
                 <Logo/>
-                <StyledForm onSubmit={handleLogin}>
-                {error && <StyledAlert variant="danger">{error}</StyledAlert>}
-                    <StyledInput id="email">
-                        <StyledEmailIcon />
-                        <StyledForm.Control
+                {error ? <Text style={styles.alert}>{error}</Text> : null}
+                <View style={styles.form}>
+                    <TextInput 
+                        style={styles.textInput} 
+                        id="email"
+                        name="email"
                         type="email"
                         placeholder="Email"
-                        name="email"
-                        ref={emailRef}
+                        onChangeText={text => setEmail(text)}
                         required
-                        />
-                    </StyledInput>
+                    />
 
-                    <StyledInput id="password">
-                        <StyledPasswordIcon />
-                        <StyledForm.Control
+                    <TextInput 
+                        style={styles.textInput} 
+                        id="password"
                         name="password"
                         placeholder="Password"
                         type="password"
-                        ref={passwordRef}
+                        onChangeText={text => setPassword(text)}
                         required
-                        />
-                    </StyledInput>
-                    <StyledButton disabled={loading} type="submit">
-                        Login
-                    </StyledButton>
+                    />
+
+                    <Button 
+                        style={styles.button}
+                        title="Login"
+                        disabled={loading}
+                        onPress={e =>handleLogin(e)}
+                    >Login</Button>
+
                     <View style={styles.row}>
-                        <TouchableOpacity
-                        onPress={() => navigation.navigate('ForgetPassword')}
-                        >
+                        <TouchableOpacity  onPress={() => navigation.navigate('ForgetPassword')}>
                         <Text style={styles.link}>Forgot your password?</Text>
                         </TouchableOpacity>
                     </View>
+
                     <View style={styles.row}>
                         <Text>
                             Create a new account? 
-                            <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
+                            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                                 <Text style={styles.link}>Sign up</Text>
                             </TouchableOpacity>
                         </Text>
                     </View>
-                </StyledForm>
-            </StyledCard>
-        </CenterContainer>
+                </View>
+            </SafeAreaView>
     )
 }
 

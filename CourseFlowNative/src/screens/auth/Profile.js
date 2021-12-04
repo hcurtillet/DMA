@@ -1,74 +1,56 @@
 import React, {useState} from 'react'
-import { TouchableOpacity, View, Text } from 'react-native';
-import { CenterContainer } from '../../components';
+import { SafeAreaView, TouchableOpacity, View, Text, TextInput, Pressable } from 'react-native';
 import {
-    StyledButton,
-    StyledCard,
-    StyledForm,
-    StyledAlert,
     styles
   } from "./style";
 import { useAuth } from '../../contexts/AuthProvider';
-import {auth} from '../../../firebase';
+import { auth } from '../../../firebase';
+import { useNavigation } from '@react-navigation/native';
 
-function Profile({navigation}) {
+function Profile() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const {currentUser} = useAuth();
+    const navigation = useNavigation(); 
 
     async function handleLogout() {
         setError(""); // clean current error context
         try {
           await auth.signOut();
-          navigation.replace('Login');
+          navigation.navigate('Login');
         } catch {
           setError("Failed to log out");
         }
       }
 
     return (
-        <CenterContainer>
-            <StyledCard>
+        <SafeAreaView style={styles.container}>
                 <Text style={styles.title}>Profile</Text>
-                {error && <StyledAlert variant="danger">{error}</StyledAlert>}
-                {currentUser ? 
-                <StyledForm>
-                    <StyledForm.Group id="icon">
-                        <View style={styles.icon}>
-                            {currentUser.email.charAt(0).toUpperCase()}
-                        </View>
-                        <Text>{currentUser.email}</Text>
-                        
-                    </StyledForm.Group>
+                {error ? <Text style={styles.alert}>{error}</Text> : null}
+                <View style={styles.profile}>
+                    <Text style={styles.icon}>
+                        {currentUser.email.charAt(0).toUpperCase()}
+                    </Text>
+                    <Text>{currentUser.email}</Text>
 
-                    <StyledForm.Group id="logout">
-                        <StyledButton
-                        disabled={loading}
-                        variant="danger"
-                        onClick={handleLogout}
+                    <View style={styles.row}>
+                        <Pressable
+                            style={styles.logOutButton}
+                            disabled={loading}
+                            onClick={handleLogout}
                         >
-                        Logout
-                        </StyledButton>
-                    </StyledForm.Group>
+                            <Text style={styles.logOutText}>Log out</Text>
+                        </Pressable>
+                    </View>
 
-                    <StyledForm.Group id="back">
-                        <View style={styles.row}>
-                            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                            <Text style={styles.link}>Back</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </StyledForm.Group>
+                    <View style={styles.row}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                        <Text style={styles.link}>Back</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                </StyledForm>
-                :
-                <View style={styles.row}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Text style={styles.link}>Login</Text>
-                    </TouchableOpacity>
                 </View>
-                }
-            </StyledCard>
-        </CenterContainer>
+        </SafeAreaView>
     )
 }
 

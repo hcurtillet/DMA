@@ -1,33 +1,25 @@
-import React, {useState, useRef} from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
-import { CenterContainer } from '../../components';
-import{
-    StyledCard,
-    StyledForm,
-    StyledButton,
-    StyledEmailIcon,
-    StyledPasswordIcon,
-    StyledInput,
-    StyledAlert,
-    styles
-} from './style';
-import {auth} from '../../../firebase';
+import React, { useState } from 'react';
+import { SafeAreaView, TouchableOpacity, View, Text, TextInput , Button} from 'react-native';
+import{ styles } from './style';
+import { auth } from '../../../firebase';
+import { useNavigation } from '@react-navigation/native';
 
-export default function SignUp({navigation}) {
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
+export default function SignUp() {
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [passwordConfirm,setPasswordConfirm] = useState('');
     const [error, setError]=useState('');
     const [loading, setLoading] = useState(false);
+    const navigation = useNavigation(); 
 
     async function handleSignUp(e){
         e.preventDefault();
-        if(passwordRef.current.value !== passwordConfirmRef.current.value){
+        if(password!== passwordConfirm){
             return setError('Password does not match!')
         }
         try {
-            await auth.createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
-            navigation.replace('Login');
+            await auth.createUserWithEmailAndPassword(email, password)
+            navigation.navigate('Login');
         } catch {
             setError("Failed to sign up");
         }
@@ -35,56 +27,63 @@ export default function SignUp({navigation}) {
     };
 
     return (
-        <CenterContainer>
-            <StyledCard>
-                <Text style={styles.title}>Sign Up</Text>
-                <StyledForm onSubmit={handleSignUp}>
-                    {error && <StyledAlert variant="danger">{error}</StyledAlert>}
-                    <StyledInput id="email">
-                        <StyledEmailIcon/>
-                        <StyledForm.Control
-                            type="email"
-                            placeholder="Email"
-                            name="email"
-                            ref={emailRef}
-                            required
-                        />
-                    </StyledInput>
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title}>Sign Up</Text>
+            <View style={styles.form}>
+                <View style={styles.row}>
+                    {error ? <Text style={styles.alert}>{error}</Text> : null}
+                </View>
+                <TextInput 
+                    style={styles.textInput} 
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    onChangeText={text => setEmail(text)}
+                    required
+                />
 
-                    <StyledInput id="password">
-                        <StyledPasswordIcon/>
-                        <StyledForm.Control
-                            name="password"
-                            placeholder="Password"
-                            type="password"
-                            ref={passwordRef}
-                            required
-                        />
-                    </StyledInput>
+                <TextInput 
+                    style={styles.textInput} 
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    onChangeText={text => setPassword(text)}
+                    required
+                    />
 
-                    <StyledInput id="password-confirm">
-                        <StyledPasswordIcon/>
-                        <StyledForm.Control
-                            name="password-confirm"
-                            placeholder="Password Confirm"
-                            type="password"
-                            ref={passwordConfirmRef}
-                            required
-                        />
-                    </StyledInput>
-                    <StyledButton disabled={loading} type="submit">
-                        {loading ? "Creating account…" : "Sign Up"}
-                    </StyledButton >
-                </StyledForm>
+                <TextInput 
+                    style={styles.textInput} 
+                    id="password-confirm"
+                    name="password-confirm"
+                    placeholder="Password Confirm"
+                    type="password"
+                    onChangeText={text => setPasswordConfirm(text)}
+                    required
+                    />
+
+                <Button 
+                    style={styles.button}
+                    title="Sign Up"
+                    disabled={loading}
+                    onPress={e =>handleSignUp(e)}
+                > Sign Up
+                </Button>
 
                 <View style={styles.row}>
+                    <Text>
                     Already have an account?
-                    <TouchableOpacity onPress={() => navigation.replace('Login')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                         <Text style={styles.link}>Login</Text>
                     </TouchableOpacity>
+                    </Text>
                 </View>
-            </StyledCard>
 
-        </CenterContainer>
+            </View>
+
+
+
+        </SafeAreaView>
     )
 }

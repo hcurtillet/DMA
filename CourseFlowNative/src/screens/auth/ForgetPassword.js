@@ -1,30 +1,26 @@
-import React, {useState, useRef} from 'react'
-import { TouchableOpacity, View, Text } from 'react-native';
-import { Logo, CenterContainer } from '../../components';
+import React, { useState } from 'react'
+import { SafeAreaView, TouchableOpacity, View, Text, TextInput, Button } from 'react-native';
+import { Logo } from '../../components';
 import{
-    StyledCard,
-    StyledForm,
-    StyledEmailIcon,
-    StyledInput,
-    StyledAlert,
-    StyledButton,
     styles
 } from './style';
-import {auth} from '../../../firebase';
+import { auth } from '../../../firebase';
+import { useNavigation } from '@react-navigation/native';
 
-export default function ForgetPassword({navigation}) {
-    const emailRef = useRef();
+export default function ForgetPassword() {
+    const [email,setEmail] = useState('');
     const [error, setError]=useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    
+    const navigation = useNavigation(); 
+
     async function handleReset(e) {
         e.preventDefault();
 
         try {
             setError("");
             setLoading(true);
-            await auth.sendPasswordResetEmail(emailRef.current.value);
+            await auth.sendPasswordResetEmail(email);
             setMessage("Check your inbox for further instructions!");
         } catch {
             setError("Failed to reset password");
@@ -34,28 +30,41 @@ export default function ForgetPassword({navigation}) {
     }
 
     return (
-        <CenterContainer>
-            <StyledCard>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Reset Password</Text>
-                <Logo/>
-                {error && <StyledAlert variant="danger">{error}</StyledAlert>}
-                {message && <StyledAlert variant="success">{message}</StyledAlert>}
-                <StyledForm onSubmit={handleReset}>
-                        <StyledInput id="email">
-                            <StyledEmailIcon/>
-                            <StyledForm.Control type="email" ref={emailRef} required />
-                        </StyledInput >
+            <Logo/>
+            <View style={styles.row}>
+                {error ? <Text style={styles.alert}>{error}</Text>:null}
+                {message ? <Text style={styles.message}>{message}</Text>:null}
+            </View>
 
-                        <StyledButton disabled={loading} type="submit">
-                            Reset Password
-                         </StyledButton>
-                    </StyledForm>
+            <View style={styles.form}>
+                <TextInput
+                    style={styles.textInput} 
+                    id="email"
+                    type="email" 
+                    placeholder="Email"
+                    onChangeText={text => setEmail(text)}
+                    required 
+                />
+
+                <Button 
+                    style={styles.button}
+                    title="Reset Password"
+                    mode="outlined"
+                    disabled={loading}
+                    onPress={e =>handleReset(e)}
+                > Reset Password
+                </Button>
+
                 <View style={styles.row}>
-                    <TouchableOpacity onPress={() => navigation.replace('Login')}>
-                        <Text style={styles.link}>Login</Text>
-                    </TouchableOpacity>
-                </View>
-            </StyledCard>
-        </CenterContainer>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.link}>Login</Text>
+                </TouchableOpacity>
+            </View>
+            </View>
+
+
+        </SafeAreaView>
     )
 }
