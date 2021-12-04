@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView, TouchableOpacity, View, Text, TextInput, Button } from 'react-native';
 import { Logo } from '../../components';
 import{
