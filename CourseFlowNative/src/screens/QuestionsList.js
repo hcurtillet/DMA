@@ -52,13 +52,28 @@ export default function QuestionsList({ navigation, route }) {
   }
 
     const navigate = useNavigation();
-    const courseID = route.params.courseID;
+    const courseID = route.params.courseID.trim();
     const {data: questions} = useQuestions();
-    console.log(questions);
-    console.log("COURSE ID = \"" + courseID + "\"");
+    //console.log(questions);
+    //console.log("COURSE ID = \"" + courseID + "\"");
     
     if(questions=== undefined || questions === null || questions.length === 0) {
-      return ( <Text> No question has been asked yet !</Text>);
+      return ( 
+        <React.Fragment>
+          <View style={questionsStyles.container}>
+            <Text style={styles.title}>Questions</Text>
+            <SafeAreaView
+              style={{
+                flex: 1,
+                paddingTop: 10,
+                paddingBottom: 20,
+              }}
+            >
+              <Text> No question has been asked yet !</Text>
+            </SafeAreaView>
+          </View>
+        </React.Fragment>
+        );
     }
 
     return (
