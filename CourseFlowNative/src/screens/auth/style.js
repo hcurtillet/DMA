@@ -1,76 +1,75 @@
 import styled from "styled-components/native";
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container:{
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    maxWidth:400
+  container: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
-  form:{
-    alignContent:'center',
-    justifyContent:'center',
+  form: {
+    alignContent: "center",
+    justifyContent: "center",
   },
 
-  profile:{
-    alignContent:'center',
-    alignItems:'center',
-    justifyContent:'center',
+  profile: {
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
-  title:{
+  title: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 30,
+    textAlign: "center",
+    marginTop: 20,
+    marginBottom: 10,
   },
 
-  row:{
+  row: {
     width: 350,
-    textAlign: 'center',
-    alignItems:'center',
+    textAlign: "center",
+    alignItems: "center",
     marginTop: 15,
   },
 
   link: {
-    color: '#0d6efd',
-    textDecorationLine: 'underline',
+    color: "#0d6efd",
+    textDecorationLine: "underline",
     fontSize: 16,
-    marginLeft: 5
+    marginLeft: 5,
   },
 
-  icon:{
-    backgroundColor: 'white',
+  icon: {
+    backgroundColor: "white",
     height: 40,
     width: 40,
     borderRadius: 50,
-    textAlign: 'center',
+    textAlign: "center",
     lineHeight: 40,
-    fontWeight: 'bold',
-    marginRight: 10,
+    fontWeight: "bold",
     marginBottom: 20,
   },
 
-  button:{
-    backgroundColor: '#f5f5f5',
+  button: {
+    backgroundColor: "#f5f5f5",
     borderRadius: 30,
     width: 150,
     height: 40,
   },
 
-  logOutButton:{
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f44336', /* Red */
+  logOutButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f44336" /* Red */,
     borderRadius: 30,
     width: 150,
     height: 40,
   },
 
-  logOutText:{
-    color:'white',
-    fontWeight:'bold'
+  logOutText: {
+    color: "white",
+    fontWeight: "bold",
   },
 
   textInput: {
@@ -87,20 +86,19 @@ export const styles = StyleSheet.create({
 
   alert: {
     padding: 20,
-    backgroundColor: '#f44336', /* Red */
-    color: 'white',
+    backgroundColor: "#f44336" /* Red */,
+    color: "white",
     marginBottom: 15,
-    width:400,
-    textAlign: 'center',
+    width: 400,
+    textAlign: "center",
   },
 
   message: {
     padding: 20,
-    backgroundColor: '#4CAF50', /* Red */
-    color: 'white',
+    backgroundColor: "#4CAF50" /* Red */,
+    color: "white",
     marginBottom: 15,
-    width:400,
-    textAlign: 'center',
+    width: 400,
+    textAlign: "center",
   },
-
 });

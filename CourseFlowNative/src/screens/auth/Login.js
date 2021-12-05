@@ -34,8 +34,8 @@ function Login() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Login</Text>
       <Logo />
+      <Text style={styles.title}>Login</Text>
       {error ? <Text style={styles.alert}>{error}</Text> : null}
       <View style={styles.form}>
         <TextInput

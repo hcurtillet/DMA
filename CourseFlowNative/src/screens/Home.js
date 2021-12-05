@@ -27,8 +27,6 @@ export default function Home() {
   });
   const { data: courses } = useCourses();
 
-  const Separator = () => <View style={styles.separator} />;
-
   function courseButton(course) {
     return (
       <View>
@@ -49,11 +47,11 @@ export default function Home() {
   return (
     <React.Fragment>
       <View style={homeStyles.container}>
-        <Text style={styles.title}>Courses</Text>
+        <Text style={homeStyles.title}>Courses</Text>
+
         <SafeAreaView
           style={{
             flex: 1,
-            paddingTop: 10,
             paddingBottom: 20,
           }}
         >
@@ -68,6 +66,11 @@ export default function Home() {
 }
 
 const homeStyles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 15,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -79,6 +82,13 @@ const homeStyles = StyleSheet.create({
     backgroundColor: "#3099f2",
     padding: 10,
     margin: 5,
+    elevation: 2,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 2,
+    shadowOpacity: 0.5,
   },
   buttonIcon: {
     width: 50,
