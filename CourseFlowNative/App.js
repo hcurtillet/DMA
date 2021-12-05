@@ -1,5 +1,5 @@
 import React from "react";
-import { Login, SignUp, ForgetPassword, Profile, Home } from "./src/screens";
+import { Login, SignUp, ForgetPassword, Profile, Home, QuestionsList } from "./src/screens";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthProvider } from "./src/contexts/AuthProvider";
@@ -49,6 +49,14 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
+            options={{
+              headerTitleAlign: "center",
+              headerTitle: (props) => <LogoTitle {...props} />,
+            }}
+          />
+          <Stack.Screen
+            name="QuestionsList"
+            component={QuestionsList}
             options={{
               headerTitleAlign: "center",
               headerTitle: (props) => <LogoTitle {...props} />,
