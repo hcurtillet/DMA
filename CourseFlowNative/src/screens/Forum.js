@@ -4,6 +4,7 @@ import { getFirestore, collection, doc, getDocs, getDoc, where, query, setDoc } 
 import useSWR from "swr";
 import { useAuth } from "../contexts/AuthProvider";
 import { database } from "../../firebase"
+import { homeStyles } from "./Home";
 
 function Forum({navigation, route}) {
 
@@ -13,7 +14,7 @@ function Forum({navigation, route}) {
         //const questionsList = questionsSnapshot.docs.map((doc) => doc.data());
         return questionsSnapshot.data();
     }
-      
+
     function useQuestion() {
         return useSWR("Questions", getQuestions);
     }
@@ -24,14 +25,14 @@ function Forum({navigation, route}) {
         const messagesSnapshot = await getDocs(messagesQuery);
         const messagesList= messagesSnapshot.docs.map((doc) => {
             return doc.data();
-        
+
         });
         messagesList.sort((a,b) =>{ //in order to sort the message list by date
             return a.date.seconds - b.date.seconds;
         })
         return messagesList;
     }
-      
+
     function useMessages() {
         return useSWR("Messages", getMessages);
     }
@@ -41,7 +42,6 @@ function Forum({navigation, route}) {
     const question = route.params.question;
     const idQuestion = question.id.trim();
     const { currentUser, logout, updatePassword, updateEmail } = useAuth();
-    const {data: questions} = useQuestion();
     const {data: messages} = useMessages();
     const [newAnswer, setNewAnswer] = useState('');
 
@@ -76,75 +76,59 @@ function Forum({navigation, route}) {
                     <Text style={stylesmessage.datetext}>{toDate(message.date.seconds)}</Text>
                 </View>
             </View>
-        )
+            )
     }
 
-    if(questions=== undefined || questions === null || questions.length === 0) {
+    if(messages=== undefined || messages === null || messages.length === 0) {
       return ( <Text> This question is unavailable</Text>);
-    }
+  }
 
 
-    return (
-        <SafeAreaView style={{ flex: 1, paddingTop:40 }}>
-            <View style={styles.maincontainer}>
-                <View style={styles.questiontitle}>
-                    <Text style={styles.titletext}>{question.title}</Text>
-                </View>
-                <View style={styles.questioncontainer}>
-                    <Text style={styles.usertext}>{question.userName}</Text>
-                    <Text style={styles.questiontext}>{question.text}</Text>
-                    <Text style={styles.datetext}>{toDate(question.date.seconds)}</Text>
-                </View>
-                <TextInput multiline={true}
-                numberOfLines={4}
-                style={styles.textinput} 
-                placeholder='Answer something...'
-                value={newAnswer}
-                onChangeText={(text) => setNewAnswer(text)}
-                onSubmitEditing={() => {}}
-                />
-                <View style={styles.buttonview}>
-                    <Button
-                        onPress={() => addAnswer()}
-                        style={styles.button}
-                        title='Answer'
-                    />
-                </View>
-                <FlatList
-                    data={messages}
-                    renderItem={({item}) => MessageRender(item)}
-                />
+  return (
+    <SafeAreaView style={{ flex: 1, paddingTop:40 }}>
+        <View style={homeStyles.container}>
+            <Text style={homeStyles.title}>{question.title}</Text>
+            <View style={styles.questioncontainer}>
+                <Text style={styles.usertext}>{question.userName}</Text>
+                <Text style={styles.questiontext}>{question.text}</Text>
+                <Text style={styles.datetext}>{toDate(question.date.seconds)}</Text>
             </View>
-        </SafeAreaView>
+        <TextInput multiline={true}
+            numberOfLines={4}
+            style={styles.textinput} 
+            placeholder='Answer something...'
+            value={newAnswer}
+            onChangeText={(text) => setNewAnswer(text)}
+            onSubmitEditing={() => {}}
+        />
+        <View style={styles.buttonview}>
+        <Button
+            onPress={() => addAnswer()}
+            style={styles.button}
+            title='Answer'
+        />
+        </View>
+            <FlatList
+            data={messages}
+            renderItem={({item}) => MessageRender(item)}
+            />
+        </View>
+    </SafeAreaView>
     );
-    
+
 }
 
 const styles = StyleSheet.create({
-    maincontainer: {
-        marginTop: 0,
-        flex: 1,
-        backgroundColor: "#D1D1D1"
-    },
-    questiontitle: {
-        backgroundColor: "#1A54A6",
-        height: 50,
-        alignItems: 'center'
-    },
     questioncontainer: {
         marginBottom: 5,
         textAlign: "justify",
-        backgroundColor: "#888888"
+        backgroundColor: "white"
 
     },
     titletext: {
-        marginTop: 10,
-        marginBottom: 10,
-        fontWeight: 'bold',
         fontSize: 20,
-        flex: 1,
-        flexWrap: 'wrap',
-        paddingRight: 5
+        textAlign: "center",
+        margin: 15,
     },
     usertext: {
         fontWeight: 'bold',
@@ -186,7 +170,7 @@ const stylesmessage = StyleSheet.create({
         justifyContent:'center',
         marginTop:10,
         width: '90%',
-        backgroundColor: "#AAAA"
+        backgroundColor: "white"
     },
     usertext: {
         fontWeight: 'bold',
