@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, Button, FlatList, SafeAreaView, StatusBar } from "react-native";
 import { getFirestore, collection, doc, getDocs, getDoc, where, query, setDoc } from "firebase/firestore/lite";
 import useSWR from "swr";
+import { useAuth } from "../contexts/AuthProvider";
 import { database } from "../../firebase"
 
 function Forum({navigation, route}) {
-
 
     async function getQuestions() {
         const questionsCollection = doc(database, "Questions", idQuestion);
@@ -37,7 +37,9 @@ function Forum({navigation, route}) {
     }
 
 
-    const idQuestion = useLocation().pathname.replace("/question/","");
+    
+    const question = route.params.question;
+    const idQuestion = question.id.trim();
     const { currentUser, logout, updatePassword, updateEmail } = useAuth();
     const {data: questions} = useQuestion();
     const {data: messages} = useMessages();
@@ -51,6 +53,8 @@ function Forum({navigation, route}) {
             userName: currentUser.email
         }
         updateAnswer(newAnswerObject);
+        setNewAnswer("");
+        navigation.navigate("Forum", {question:question});
     }
 
     function updateAnswer(newAnswerObject){
@@ -69,42 +73,50 @@ function Forum({navigation, route}) {
                 <View style={stylesmessage.maincontainer}>
                     <Text style={stylesmessage.usertext}>{message.userName}</Text>
                     <Text style={stylesmessage.questiontext}>{message.text}</Text>
-                    <Text style={stylesmessage.datetext}>{this.toDate(message.date.seconds)}</Text>
+                    <Text style={stylesmessage.datetext}>{toDate(message.date.seconds)}</Text>
                 </View>
             </View>
         )
     }
-        return (
-            <SafeAreaView style={{ flex: 1, paddingTop:40 }}>
-                <View style={styles.maincontainer}>
-                    <View style={styles.questiontitle}>
-                        <Text style={styles.titletext}>{this.state.question.title}</Text>
-                    </View>
-                    <View style={styles.questioncontainer}>
-                        <Text style={styles.usertext}>{this.state.question.userName}</Text>
-                        <Text style={styles.questiontext}>{this.state.question.text}</Text>
-                        <Text style={styles.datetext}>{this.toDate(this.state.question.date.seconds)}</Text>
-                    </View>
-                    <TextInput multiline={true}
-                    numberOfLines={4}
-                    style={styles.textinput} 
-                    placeholder='Answer something...'
-                    onChangeText={(text) => this.setState({answerInput: text})}
-                    onSubmitEditing={() => {}}  
-                    />
-                    <View style={styles.buttonview}>
-                        <Button
-                            style={styles.button}
-                            title='Answer'
-                        />
-                    </View>
-                    <FlatList
-                        data={messages}
-                        renderItem={({item}) => MessageRender(item)}
+
+    if(questions=== undefined || questions === null || questions.length === 0) {
+      return ( <Text> This question is unavailable</Text>);
+    }
+
+
+    return (
+        <SafeAreaView style={{ flex: 1, paddingTop:40 }}>
+            <View style={styles.maincontainer}>
+                <View style={styles.questiontitle}>
+                    <Text style={styles.titletext}>{question.title}</Text>
+                </View>
+                <View style={styles.questioncontainer}>
+                    <Text style={styles.usertext}>{question.userName}</Text>
+                    <Text style={styles.questiontext}>{question.text}</Text>
+                    <Text style={styles.datetext}>{toDate(question.date.seconds)}</Text>
+                </View>
+                <TextInput multiline={true}
+                numberOfLines={4}
+                style={styles.textinput} 
+                placeholder='Answer something...'
+                value={newAnswer}
+                onChangeText={(text) => setNewAnswer(text)}
+                onSubmitEditing={() => {}}
+                />
+                <View style={styles.buttonview}>
+                    <Button
+                        onPress={() => addAnswer()}
+                        style={styles.button}
+                        title='Answer'
                     />
                 </View>
-            </SafeAreaView>
-        );
+                <FlatList
+                    data={messages}
+                    renderItem={({item}) => MessageRender(item)}
+                />
+            </View>
+        </SafeAreaView>
+    );
     
 }
 

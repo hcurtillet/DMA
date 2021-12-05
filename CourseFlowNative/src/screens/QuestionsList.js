@@ -43,7 +43,7 @@ export default function QuestionsList({ navigation, route }) {
 
     function renderQuestion(question) {
     return (
-      <TouchableOpacity style={questionsStyles.button} onPress={() => navigation.navigate("Home")}>
+      <TouchableOpacity style={questionsStyles.button} onPress={() => navigation.navigate("Forum", {question:question})}>
         <Text style={questionsStyles.questionTitle}>{question.title}</Text>
         <Text style={questionsStyles.questionUsername}>{question.userName}</Text>
         <Text style={questionsStyles.timestamp}>{toDate(question.date.seconds)}</Text>
