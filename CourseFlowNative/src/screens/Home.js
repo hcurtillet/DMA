@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Forum")}>
           <Text style={homeStyles.textHeader}>Profile</Text>
         </TouchableOpacity>
       ),

@@ -5,6 +5,7 @@ import ForgetPassword from './auth/ForgetPassword';
 import Profile from './auth/Profile';
 import Home from './Home';
 import QuestionsList from './QuestionsList';
+import Forum from './Forum';
 
 
 export {
@@ -14,6 +15,7 @@ export {
     ForgetPassword,
     Profile,
     Home,
-    QuestionsList
+    QuestionsList,
+    Forum,
     
 };
