@@ -86,6 +86,7 @@ const homeStyles = StyleSheet.create({
   },
   textHeader: {
     fontSize: 16,
+    margin: 8,
     textAlign: "center",
   },
 });
