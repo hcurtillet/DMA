@@ -32,7 +32,7 @@ export default function Home() {
       <View>
         <TouchableOpacity
           style={homeStyles.button}
-          onPress={() => navigation.navigate("Home")} //Change so its to the forum
+          onPress={() => navigation.navigate("QuestionsList", {courseID:course.id})} //Change so its to the forum
         >
           <Text>{course.name}</Text>
         </TouchableOpacity>
