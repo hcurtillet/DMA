@@ -32,7 +32,9 @@ export default function Home() {
       <View>
         <TouchableOpacity
           style={homeStyles.button}
-          onPress={() => navigation.navigate("QuestionsList", {courseID:course.id})} //Change so its to the forum
+          onPress={() =>
+            navigation.navigate("QuestionsList", { courseID: course.id })
+          } //Change so its to the forum
         >
           <Text>{course.name}</Text>
         </TouchableOpacity>
@@ -65,7 +67,7 @@ export default function Home() {
   );
 }
 
-const homeStyles = StyleSheet.create({
+export const homeStyles = StyleSheet.create({
   title: {
     fontSize: 20,
     textAlign: "center",

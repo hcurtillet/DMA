@@ -22,6 +22,11 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     textAlign: "center",
+    margin: 30,
+  },
+  subTitle: {
+    fontSize: 20,
+    textAlign: "center",
     marginTop: 20,
     marginBottom: 10,
   },

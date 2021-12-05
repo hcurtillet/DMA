@@ -36,7 +36,7 @@ export default function ForgetPassword() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Reset Password</Text>
+      <Text style={styles.subTitle}>Reset Password</Text>
       <View style={styles.row}>
         {error ? <Text style={styles.alert}>{error}</Text> : null}
         {message ? <Text style={styles.message}>{message}</Text> : null}
