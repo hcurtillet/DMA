@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { database } from "../../firebase"
+import { database } from "../../firebase";
 import { collection, getDocs, where, query } from "firebase/firestore/lite";
 import useSWR from "swr";
 import {
@@ -13,73 +13,83 @@ import {
 } from "react-native";
 import { styles } from "./auth/style";
 import { StyleSheet } from "react-native";
+import { homeStyles } from "./Home";
 
 export default function QuestionsList({ navigation, route }) {
-    async function getQuestions() {
-        
-        
-        let questionsCollection = collection(database, "Questions");
-        let questionsQuery = query(questionsCollection, where("courseId", "==", courseID));
-        const snapshot = await getDocs(questionsQuery);
-        const questions = snapshot.docs.map((doc) => doc.data());
-        questions.sort((a,b) =>{ //in order to sort the message list by date
-            return a.date.seconds - b.date.seconds;
-        })
-        return questions;
-    }
+  async function getQuestions() {
+    let questionsCollection = collection(database, "Questions");
+    let questionsQuery = query(
+      questionsCollection,
+      where("courseId", "==", courseID)
+    );
+    const snapshot = await getDocs(questionsQuery);
+    const questions = snapshot.docs.map((doc) => doc.data());
+    questions.sort((a, b) => {
+      //in order to sort the message list by date
+      return a.date.seconds - b.date.seconds;
+    });
+    return questions;
+  }
 
-    function useQuestions() {
-        return useSWR("Questions", getQuestions);
-    }
+  function useQuestions() {
+    return useSWR("Questions", getQuestions);
+  }
 
-    function toDate(timestamp) {
-      let date = new Date(timestamp*1000);
-      return date.toLocaleString();
-    }
-    
-    function goToQuestion(question) {
-      navigate("/question/"+question.id.trim());
-    }
+  function toDate(timestamp) {
+    let date = new Date(timestamp * 1000);
+    return date.toLocaleString();
+  }
 
-    function renderQuestion(question) {
+  function goToQuestion(question) {
+    navigate("/question/" + question.id.trim());
+  }
+
+  function renderQuestion(question) {
     return (
-      <TouchableOpacity style={questionsStyles.button} onPress={() => navigation.navigate("Forum", {question:question})}>
+      <TouchableOpacity
+        style={homeStyles.button}
+        onPress={() => navigation.navigate("Forum", { question: question })}
+      >
         <Text style={questionsStyles.questionTitle}>{question.title}</Text>
-        <Text style={questionsStyles.questionUsername}>{question.userName}</Text>
-        <Text style={questionsStyles.timestamp}>{toDate(question.date.seconds)}</Text>
+        <Text style={questionsStyles.questionUsername}>
+          {question.userName}
+        </Text>
+        <Text style={questionsStyles.timestamp}>
+          {toDate(question.date.seconds)}
+        </Text>
       </TouchableOpacity>
     );
   }
 
-    const navigate = useNavigation();
-    const courseID = route.params.courseID.trim();
-    const {data: questions} = useQuestions();
-    //console.log(questions);
-    //console.log("COURSE ID = \"" + courseID + "\"");
-    
-    if(questions=== undefined || questions === null || questions.length === 0) {
-      return ( 
-        <React.Fragment>
-          <View style={questionsStyles.container}>
-            <Text style={styles.title}>Questions</Text>
-            <SafeAreaView
-              style={{
-                flex: 1,
-                paddingTop: 10,
-                paddingBottom: 20,
-              }}
-            >
-              <Text> No question has been asked yet !</Text>
-            </SafeAreaView>
-          </View>
-        </React.Fragment>
-        );
-    }
+  const navigate = useNavigation();
+  const courseID = route.params.courseID.trim();
+  const { data: questions } = useQuestions();
+  //console.log(questions);
+  //console.log("COURSE ID = \"" + courseID + "\"");
 
+  if (questions === undefined || questions === null || questions.length === 0) {
     return (
+      <React.Fragment>
+        <View style={questionsStyles.container}>
+          <Text style={homeStyles.title}>Questions</Text>
+          <SafeAreaView
+            style={{
+              flex: 1,
+              paddingTop: 10,
+              paddingBottom: 20,
+            }}
+          >
+            <Text> No question has been asked yet !</Text>
+          </SafeAreaView>
+        </View>
+      </React.Fragment>
+    );
+  }
+
+  return (
     <React.Fragment>
       <View style={questionsStyles.container}>
-        <Text style={styles.title}>Questions</Text>
+        <Text style={homeStyles.title}>Questions</Text>
         <SafeAreaView
           style={{
             flex: 1,
@@ -94,11 +104,8 @@ export default function QuestionsList({ navigation, route }) {
         </SafeAreaView>
       </View>
     </React.Fragment>
-
-
-    );
-};
-
+  );
+}
 
 const questionsStyles = StyleSheet.create({
   container: {
@@ -123,7 +130,7 @@ const questionsStyles = StyleSheet.create({
     textAlign: "right",
     alignSelf: "flex-end",
     fontSize: 10,
-    opacity:0.8
+    opacity: 0.8,
   },
   questionUsername: {
     alignSelf: "flex-start",
