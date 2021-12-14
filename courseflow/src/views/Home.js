@@ -22,7 +22,7 @@ import {
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "@fontsource/open-sans/700.css";
 
-const theme = extendTheme({
+export const theme = extendTheme({
   textStyles: {
     h1: {
       // you can also use responsive styles

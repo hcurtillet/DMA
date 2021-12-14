@@ -1,48 +1,34 @@
-import React, { useState, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
-  StyledEmailIcon,
-  StyledPasswordIcon,
   StyledButtonAnswer,
   StyledInput,
-  StyledLink,
-  StyledCard,
-  StyledTitle,
-  StyledCourseButton,
-  StyledForm,
-  StyledCourse,
-  StyledQuestionTitle,
   StyledQuestionText,
   StyledMessage,
   StyledUserMessage,
-  StyledTimeMessage,
-  StyledCenteringDiv
+  StyledTimeMessage
 } from "./auth/style";
-import {Form, Alert} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import { useAuth } from '../context/AuthProvider';
 import { QuestionContainer } from "../components";
-import QuestionModel from "../model/QuestionModel";
 import { database } from "../firebase"
-import { getFirestore, collection, doc, getDocs, getDoc, where, query, setDoc } from "firebase/firestore/lite";
+import { collection, doc, getDocs, where, query, setDoc } from "firebase/firestore/lite";
 import useSWR from "swr";
-import { VStack, Box, Button } from "@chakra-ui/react";
+import { Center, VStack, Box, IconButton } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ChakraProvider } from "@chakra-ui/react";
+import "@fontsource/open-sans/700.css";
+import {theme} from "./Home";
 
 
-function Forum(){
+function Forum(props){
     function toDate(seconds){
         const dateObject = new Date(seconds*1000);
         return dateObject.toLocaleString();
     }
 
-    async function getQuestions() {
-        const questionsCollection = doc(database, "Questions", idQuestion);
-        const questionsSnapshot = await getDoc(questionsCollection);
-        //const questionsList = questionsSnapshot.docs.map((doc) => doc.data());
-        return questionsSnapshot.data();
-    }
-      
-    function useQuestion() {
-        return useSWR("Questions", getQuestions);
+    const goBack = () => {
+      navigate(-1);
     }
 
     async function getMessages() {
@@ -60,15 +46,46 @@ function Forum(){
     }
       
     function useMessages() {
-        return useSWR("Messages", getMessages);
+        return useSWR("Messages", getMessages, { refreshInterval: 5000 });
+    }
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const btnRef = React.useRef();
+    const { currentUser, logout, updatePassword, updateEmail } = useAuth();
+    const {data: messages} = useMessages();
+    const [newAnswer, setNewAnswer] = useState('');
+    const state = location.state;
+    const question = state;
+
+    if(question=== undefined || question === null) {
+      return (
+        <div>
+          <ChakraProvider theme={theme}>
+            <IconButton
+              ref={btnRef}
+              colorScheme="kth"
+              onClick={goBack}
+              icon={<ArrowBackIcon />}
+            ></IconButton>
+
+            <Center>
+              <Box textStyle="h1">Questions</Box>
+            </Center>
+            <VStack>
+              <QuestionContainer>
+                    <h1> This question is unavailable</h1>
+                </QuestionContainer>
+            </VStack>
+          </ChakraProvider>
+        </div>
+        );
     }
 
 
-    const idQuestion = useLocation().pathname.replace("/question/","");
-    const { currentUser, logout, updatePassword, updateEmail } = useAuth();
-    const {data: questions} = useQuestion();
-    const {data: messages} = useMessages();
-    const [newAnswer, setNewAnswer] = useState('');
+
+    const idQuestion = question.id;
+    
 
     function addAnswer(){
         const newAnswerObject = {
@@ -85,48 +102,56 @@ function Forum(){
         setDoc(doc(messagesCollection), newAnswerObject);
     }
 
-    if(questions=== undefined || questions === null || questions.length === 0) {
-      return ( <QuestionContainer>
-                    <h1> This question is unavailable</h1>
-            </QuestionContainer>);
-    }
 
-    const question = questions[0];
-
-    if(question !== undefined && messages !== undefined){
+    if(messages !== undefined){
         return(
-            <QuestionContainer>
-                <StyledQuestionTitle>{question.title}</StyledQuestionTitle>
-                <StyledMessage>
-                    <StyledUserMessage>{question.userName}</StyledUserMessage>
-                    <StyledTimeMessage>{toDate(question.date.seconds)}</StyledTimeMessage>
-                    <StyledQuestionText>{question.text}</StyledQuestionText>
-                </StyledMessage>
-                <Form>
-                    <StyledInput id="email">
-                        <Form.Control
-                            type="text"
-                            placeholder="Write an answer..."
-                            onChange={event => setNewAnswer(event.target.value)}
-                        />
-                    </StyledInput>
-                        <StyledButtonAnswer onClick={addAnswer}>
-                            Answer
-                        </StyledButtonAnswer>
-                </Form>     
+            <div>
+              <ChakraProvider theme={theme}>
+                <IconButton
+                  ref={btnRef}
+                  colorScheme="kth"
+                  onClick={goBack}
+                  icon={<ArrowBackIcon />}
+                ></IconButton>
+
+                <Center>
+                  <Box textStyle="h1">{question.title}</Box>
+                </Center>
                 <VStack>
-                    {messages.map((message) => (
+                  <QuestionContainer>
                         <StyledMessage>
-                        <StyledUserMessage>{message.userName}</StyledUserMessage>
-                        <StyledTimeMessage>{toDate(message.date.seconds)}</StyledTimeMessage>
-                        <StyledQuestionText>{message.text}</StyledQuestionText>
-                    </StyledMessage>
-                        
-                    ))}
+                            <StyledUserMessage>{question.userName}</StyledUserMessage>
+                            <StyledTimeMessage>{toDate(question.date.seconds)}</StyledTimeMessage>
+                            <StyledQuestionText>{question.text}</StyledQuestionText>
+                        </StyledMessage>
+                        <Form>
+                            <StyledInput id="email">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Write an answer..."
+                                    onChange={event => setNewAnswer(event.target.value)}
+                                />
+                            </StyledInput>
+                                <StyledButtonAnswer onClick={addAnswer}>
+                                    Answer
+                                </StyledButtonAnswer>
+                        </Form>     
+                        <VStack>
+                            {messages.map((message) => (
+                                <StyledMessage>
+                                <StyledUserMessage>{message.userName}</StyledUserMessage>
+                                <StyledTimeMessage>{toDate(message.date.seconds)}</StyledTimeMessage>
+                                <StyledQuestionText>{message.text}</StyledQuestionText>
+                            </StyledMessage>
+                                
+                            ))}
+                        </VStack>
+                    
+                    </QuestionContainer>
                 </VStack>
-            
-            </QuestionContainer>
-        )
+              </ChakraProvider>
+        </div>
+        );
     }
     else{
         return (
