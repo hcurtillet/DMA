@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, SignUp, Login, ForgetPassword, QuestionsList, Profile, Forum } from "./views";
+import { Home, SignUp, Login, ForgetPassword, QuestionsList, Profile, Forum, AddQuestion } from "./views";
 import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute, CenterContainer } from "./components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -34,6 +34,7 @@ function App(props) {
             <Route exact path="/forget-password" element={<ForgetPassword />} />
             <Route exact path="/courses/*" element={<QuestionsList />}/>
             <Route exact path="/question/*" element={<Forum />}/>
+            <Route exact path="/ask-question/*" element={<AddQuestion />}/>
             <Route exact path="/profile" element={<PrivateRoute />}>
               <Route exact path="/profile" element={<Profile />} />
             </Route>

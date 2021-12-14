@@ -158,5 +158,5 @@ export const StyledButtonAnswer = styled(Button)`
     font-size: 20px;
     margin: 0;
     font-family: Georgia, "Times New Roman", Times, serif;
-    transform: translateX(25vh);
+    transform: translateX(-50%, -50%);
 `;

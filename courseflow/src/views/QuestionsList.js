@@ -1,5 +1,4 @@
 import React from 'react'
-import {ListGroup} from 'react-bootstrap';
 import { useNavigate, useLocation } from "react-router-dom";
 import { database } from "../firebase"
 import {StyledQuestionItemTitle, StyledTimestampSmall, StyledUsernameSmall} from "./auth/style";
@@ -10,6 +9,7 @@ import {
   VStack,
   Box,
   IconButton,
+  Button
 } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -18,7 +18,6 @@ import {theme} from "./Home";
 
 export default function QuestionsList() {
     async function getAllQuestions() {
-        console.log("I am fetching questions LIST");
         const questionsListCollection = collection(database, "Questions");
         const questionsListQuery = query(questionsListCollection, where("courseId", "==", courseID));
         const snapshot = await getDocs(questionsListQuery);
@@ -40,6 +39,10 @@ export default function QuestionsList() {
     
     function goToQuestion(question) {
       navigate("/question/"+question.id.trim(), {state:question});
+    }
+
+    function goToAskQuestion(id) {
+      navigate("/ask-question/"+ id.trim(), {state:id});
     }
 
     const goBack = () => {
@@ -87,6 +90,9 @@ export default function QuestionsList() {
 
         <Center>
           <Box textStyle="h1">Questions</Box>
+        </Center>
+        <Center>
+          <Button mt="20px" w={3 / 4} colorScheme="kth" alignSelf="center" onClick={() => goToAskQuestion(courseID)}>Ask a question</Button>
         </Center>
         <VStack>
           {questionsList.map(question => (
