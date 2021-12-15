@@ -8,7 +8,7 @@ import {
 import {Form} from 'react-bootstrap';
 import { useAuth } from '../context/AuthProvider';
 import { database } from "../firebase"
-import { collection, addDoc, setDoc } from "firebase/firestore/lite";
+import { collection, addDoc, updateDoc } from "firebase/firestore/lite";
 import { Center, VStack, Box, IconButton } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -25,7 +25,7 @@ function AddQuestion(props){
     async function updateQuestion(newQuestionObject){
         const questionsCollection = collection(database, "Questions");
         const res = await addDoc(questionsCollection, newQuestionObject);
-        await setDoc(res, { id: res.id });
+        await updateDoc(res, { id: res.id });
 
         navigate("/courses/"+idCourse);
     }
